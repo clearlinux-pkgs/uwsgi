@@ -1,0 +1,11 @@
+[Unit]
+Description=uWSGI service
+PartOf=uwsgi@%I.service
+
+[Socket]
+ListenStream=/run/uwsgi/%I.sock
+SocketMode=0600
+SocketUser=httpd
+
+[Install]
+WantedBy=sockets.target
