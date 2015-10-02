@@ -16,10 +16,12 @@ License  : GPL-2.0
 Requires: uwsgi-bin
 Requires: uwsgi-python
 Requires: uwsgi-config
+BuildRequires : greenlet-dev
 BuildRequires : pbr
 BuildRequires : pip
 BuildRequires : python-dev
 BuildRequires : setuptools
+Patch1: async-profile.patch
 
 %description
 The uWSGI project
@@ -52,6 +54,7 @@ python components for the uwsgi package.
 
 %prep
 %setup -q -n uwsgi-2.0.11.1
+%patch1 -p1
 
 %build
 python2 setup.py build -b py2
