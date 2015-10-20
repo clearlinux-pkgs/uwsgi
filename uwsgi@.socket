@@ -1,6 +1,5 @@
 [Unit]
 Description=uWSGI service
-PartOf=uwsgi@%I.service
 
 [Socket]
 ListenStream=/run/uwsgi/%I.sock

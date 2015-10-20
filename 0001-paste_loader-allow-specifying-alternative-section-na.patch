@@ -1,0 +1,71 @@
+From a6005624af58c44114635489b5bdd420884aa149 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Fri, 9 Oct 2015 15:53:52 +0100
+Subject: [PATCH] paste_loader: allow specifying alternative section name to
+ load.
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. #1134945 - Pipers Way, Swindon SN3 1RJ
+
+---
+ plugins/python/pyloader.c      | 13 ++++++++++++-
+ plugins/python/python_plugin.c |  1 +
+ plugins/python/uwsgi_python.h  |  1 +
+ 3 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/python/pyloader.c b/plugins/python/pyloader.c
+index 925f3a7..da30818 100644
+--- a/plugins/python/pyloader.c
++++ b/plugins/python/pyloader.c
+@@ -711,7 +711,11 @@ PyObject *uwsgi_paste_loader(void *arg1) {
+ 		exit(UWSGI_FAILED_APP_CODE);
+ 	}
+ 
+-	paste_arg = PyTuple_New(1);
++	if (up.paste_name) {
++		paste_arg = PyTuple_New(2);
++	} else {
++		paste_arg = PyTuple_New(1);
++	}
+ 	if (!paste_arg) {
+ 		PyErr_Print();
+ 		exit(UWSGI_FAILED_APP_CODE);
+@@ -722,6 +726,13 @@ PyObject *uwsgi_paste_loader(void *arg1) {
+ 		exit(UWSGI_FAILED_APP_CODE);
+ 	}
+ 
++	if (up.paste_name) {
++		if (PyTuple_SetItem(paste_arg, 1, UWSGI_PYFROMSTRING(up.paste_name))) {
++			PyErr_Print();
++			exit(UWSGI_FAILED_APP_CODE);
++		}
++	}
++
+ 	paste_app = PyEval_CallObject(paste_loadapp, paste_arg);
+ 	if (!paste_app) {
+ 		PyErr_Print();
+diff --git a/plugins/python/python_plugin.c b/plugins/python/python_plugin.c
+index cc02082..1d2df53 100644
+--- a/plugins/python/python_plugin.c
++++ b/plugins/python/python_plugin.c
+@@ -149,6 +149,7 @@ struct uwsgi_option uwsgi_python_options[] = {
+ 
+ 	{"paste", required_argument, 0, "load a paste.deploy config file", uwsgi_opt_set_str, &up.paste, 0},
+ 	{"paste-logger", no_argument, 0, "enable paste fileConfig logger", uwsgi_opt_true, &up.paste_logger, 0},
++	{"paste-name", required_argument, 0, "specify the name of the paste section", uwsgi_opt_set_str, &up.paste_name, 0},
+ 
+ 
+ 	{"web3", required_argument, 0, "load a web3 app", uwsgi_opt_set_str, &up.web3, 0},
+diff --git a/plugins/python/uwsgi_python.h b/plugins/python/uwsgi_python.h
+index aaf73ca..29fb425 100644
+--- a/plugins/python/uwsgi_python.h
++++ b/plugins/python/uwsgi_python.h
+@@ -154,6 +154,7 @@ struct uwsgi_python {
+ 	char *file_config;
+ 	char *paste;
+ 	int paste_logger;
++	char *paste_name;
+ 	char *eval;
+ 
+ 	char *web3;
+-- 
+2.1.4
+

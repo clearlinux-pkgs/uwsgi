@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.11.2
-Release  : 5
+Release  : 6
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.11.2.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.11.2.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -22,6 +22,7 @@ BuildRequires : pip
 BuildRequires : python-dev
 BuildRequires : setuptools
 Patch1: async-profile.patch
+Patch2: 0001-paste_loader-allow-specifying-alternative-section-na.patch
 
 %description
 The uWSGI project
@@ -55,6 +56,7 @@ python components for the uwsgi package.
 %prep
 %setup -q -n uwsgi-2.0.11.2
 %patch1 -p1
+%patch2 -p1
 
 %build
 python2 setup.py build -b py2
