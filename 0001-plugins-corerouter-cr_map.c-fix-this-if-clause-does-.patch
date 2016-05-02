@@ -1,0 +1,31 @@
+From a2e95df84b2067a4c9bacccd93ec344c5b0a7ead Mon Sep 17 00:00:00 2001
+From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
+Date: Mon, 2 May 2016 14:30:22 -0500
+Subject: [PATCH] =?UTF-8?q?plugins/corerouter/cr=5Fmap.c:=20fix=20this=20?=
+ =?UTF-8?q?=E2=80=98if=E2=80=99=20clause=20does=20not=20guard?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ plugins/corerouter/cr_map.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/plugins/corerouter/cr_map.c b/plugins/corerouter/cr_map.c
+index 082e1db..541957d 100644
+--- a/plugins/corerouter/cr_map.c
++++ b/plugins/corerouter/cr_map.c
+@@ -153,8 +153,9 @@ int uwsgi_cr_map_use_static_nodes(struct uwsgi_corerouter *ucr, struct coreroute
+ 				struct uwsgi_string_list *next_node = peer->static_node->next;
+ 				peer->static_node = NULL;
+ 				// needed for 1-node only setups
+-				if (!next_node)
++				if (!next_node) {
+ 					next_node = ucr->static_nodes;
++				}
+ 
+ 					while (tmp_node != next_node) {
+ 						if (!next_node) {
+-- 
+2.4.11
+
