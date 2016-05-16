@@ -1,4 +1,4 @@
-From a2e95df84b2067a4c9bacccd93ec344c5b0a7ead Mon Sep 17 00:00:00 2001
+From 87f76afb3a1dba386dfdbe8cc27f147e5541a309 Mon Sep 17 00:00:00 2001
 From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
 Date: Mon, 2 May 2016 14:30:22 -0500
 Subject: [PATCH] =?UTF-8?q?plugins/corerouter/cr=5Fmap.c:=20fix=20this=20?=
@@ -12,20 +12,20 @@ Content-Transfer-Encoding: 8bit
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/plugins/corerouter/cr_map.c b/plugins/corerouter/cr_map.c
-index 082e1db..541957d 100644
+index 2c28847..ec6635c 100644
 --- a/plugins/corerouter/cr_map.c
 +++ b/plugins/corerouter/cr_map.c
-@@ -153,8 +153,9 @@ int uwsgi_cr_map_use_static_nodes(struct uwsgi_corerouter *ucr, struct coreroute
- 				struct uwsgi_string_list *next_node = peer->static_node->next;
- 				peer->static_node = NULL;
- 				// needed for 1-node only setups
--				if (!next_node)
-+				if (!next_node) {
- 					next_node = ucr->static_nodes;
-+				}
+@@ -156,8 +156,9 @@ int uwsgi_cr_map_use_static_nodes(struct uwsgi_corerouter *ucr, struct coreroute
+ 			struct uwsgi_string_list *next_node = peer->static_node->next;
+ 			peer->static_node = NULL;
+ 			// needed for 1-node only setups
+-			if (!next_node)
++			if (!next_node) {
+ 				next_node = ucr->static_nodes;
++			}
  
- 					while (tmp_node != next_node) {
- 						if (!next_node) {
+ 			while (tmp_node != next_node) {
+ 				if (!next_node) {
 -- 
-2.4.11
+2.5.5
 
