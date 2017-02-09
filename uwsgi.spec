@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.14
-Release  : 17
+Release  : 18
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -63,15 +63,12 @@ python components for the uwsgi package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1484522515
+export SOURCE_DATE_EPOCH=1486679978
 python2 setup.py build -b py2
-python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1484522515
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/uwsgi@.service
 install -m 0644 %{SOURCE3} %{buildroot}/usr/lib/systemd/system/uwsgi@.socket
