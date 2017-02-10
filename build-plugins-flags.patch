@@ -1,0 +1,34 @@
+commit 56eea302c350750d1b55c080b8375637753331e7
+Author: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
+Date:   Fri Feb 10 14:49:27 2017 -0800
+
+    build-plugins: fix the cflags and ldflags order
+    
+    When building a plugin if a linker' -W* flag is provided and they are
+    repeated gcc will mess it up if the flag goes after files list (i.e
+    -Wl,z -Wl,now -Wl,z -Wl,relro will become:
+    
+    $ ld [...] (files list) -z now relro
+    
+    Instead of:
+    
+    $ ld [...] -z now -z relro (files list)
+    
+    It results into ld trying to link a relro file (which is obviously not
+    the expected behavior).
+    
+    Signed-off-by: Leandro Dorileo <leandro.maciel.dorileo@intel.com>
+
+diff --git a/uwsgiconfig.py b/uwsgiconfig.py
+index 5d0f365..c2a66a4 100644
+--- a/uwsgiconfig.py
++++ b/uwsgiconfig.py
+@@ -1513,7 +1513,7 @@ def build_plugin(path, uc, cflags, ldflags, libs, name = None):
+     if uwsgi_os.startswith('CYGWIN'):
+         need_pic = ' -L. -luwsgi'
+ 
+-    gccline = "%s%s %s -o %s.so %s %s %s %s" % (GCC, need_pic, shared_flag, plugin_dest, ' '.join(uniq_warnings(p_cflags)), ' '.join(gcc_list), ' '.join(uniq_warnings(p_ldflags)), ' '.join(uniq_warnings(p_libs)) )
++    gccline = "%s%s %s -o %s.so %s %s %s %s" % (GCC, need_pic, shared_flag, plugin_dest, ' '.join(p_cflags), ' '.join(p_ldflags), ' '.join(gcc_list), ' '.join(uniq_warnings(p_libs)) )
+     print_compilation_output("[%s] %s.so" % (GCC, plugin_dest), gccline)
+ 
+     ret = os.system(gccline)

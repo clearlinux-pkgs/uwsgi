@@ -1,3 +1,4 @@
 async-profile.patch
 0001-paste_loader-allow-specifying-alternative-section-na.patch
 0001-plugins-corerouter-cr_map.c-fix-this-if-clause-does-.patch
+build-plugins-flags.patch

@@ -1,0 +1,2 @@
+PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
+PYTHON=python3.6  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python36"

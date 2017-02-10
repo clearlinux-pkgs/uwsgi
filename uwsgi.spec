@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.14
-Release  : 18
+Release  : 21
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -25,6 +25,7 @@ BuildRequires : setuptools
 Patch1: async-profile.patch
 Patch2: 0001-paste_loader-allow-specifying-alternative-section-na.patch
 Patch3: 0001-plugins-corerouter-cr_map.c-fix-this-if-clause-does-.patch
+Patch4: build-plugins-flags.patch
 
 %description
 The uWSGI project
@@ -60,20 +61,25 @@ python components for the uwsgi package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1486679978
+export SOURCE_DATE_EPOCH=1486767508
 python2 setup.py build -b py2
 
 %install
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python2 -tt setup.py build -b py2 install --root=%{buildroot}
 mkdir -p %{buildroot}/usr/lib/systemd/system
 install -m 0644 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/uwsgi@.service
 install -m 0644 %{SOURCE3} %{buildroot}/usr/lib/systemd/system/uwsgi@.socket
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/uwsgi.conf
+## make_install_append content
+PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
+PYTHON=python3.6  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python36"
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
