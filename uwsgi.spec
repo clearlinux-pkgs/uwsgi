@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.14
-Release  : 22
+Release  : 23
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.14.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -16,6 +16,7 @@ License  : GPL-2.0
 Requires: uwsgi-bin
 Requires: uwsgi-python
 Requires: uwsgi-config
+Requires: uwsgi-lib
 BuildRequires : greenlet-dev
 BuildRequires : pbr
 BuildRequires : pip
@@ -48,6 +49,15 @@ Group: Default
 config components for the uwsgi package.
 
 
+%package lib
+Summary: lib components for the uwsgi package.
+Group: Libraries
+Requires: uwsgi-config
+
+%description lib
+lib components for the uwsgi package.
+
+
 %package python
 Summary: python components for the uwsgi package.
 Group: Default
@@ -65,7 +75,7 @@ python components for the uwsgi package.
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1486767508
+export SOURCE_DATE_EPOCH=1486770375
 python2 setup.py build -b py2
 
 %install
@@ -79,6 +89,9 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/uwsgi.conf
 ## make_install_append content
 PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
 PYTHON=python3.6  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python36"
+install -d -m 755 %{buildroot}/usr/lib/uwsgi
+install -p -D -m 644 python27_plugin.so  %{buildroot}/usr/lib/uwsgi/
+install -p -D -m 644 python36_plugin.so  %{buildroot}/usr/lib/uwsgi/
 ## make_install_append end
 
 %files
@@ -93,6 +106,11 @@ PYTHON=python3.6  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python pyth
 /usr/lib/systemd/system/uwsgi@.service
 /usr/lib/systemd/system/uwsgi@.socket
 /usr/lib/tmpfiles.d/uwsgi.conf
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib/uwsgi/python27_plugin.so
+/usr/lib/uwsgi/python36_plugin.so
 
 %files python
 %defattr(-,root,root,-)
