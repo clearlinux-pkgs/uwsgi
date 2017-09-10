@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.15
-Release  : 25
+Release  : 26
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -14,7 +14,7 @@ Summary  : The uWSGI server
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: uwsgi-bin
-Requires: uwsgi-python
+Requires: uwsgi-legacypython
 Requires: uwsgi-config
 Requires: uwsgi-lib
 BuildRequires : go
@@ -50,6 +50,14 @@ Group: Default
 config components for the uwsgi package.
 
 
+%package legacypython
+Summary: legacypython components for the uwsgi package.
+Group: Default
+
+%description legacypython
+legacypython components for the uwsgi package.
+
+
 %package lib
 Summary: lib components for the uwsgi package.
 Group: Libraries
@@ -57,14 +65,6 @@ Requires: uwsgi-config
 
 %description lib
 lib components for the uwsgi package.
-
-
-%package python
-Summary: python components for the uwsgi package.
-Group: Default
-
-%description python
-python components for the uwsgi package.
 
 
 %prep
@@ -79,7 +79,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1496843042
+export SOURCE_DATE_EPOCH=1505073209
 python2 setup.py build -b py2
 
 %install
@@ -111,11 +111,11 @@ install -p -D -m 644 python36_plugin.so  %{buildroot}/usr/lib/uwsgi/
 /usr/lib/systemd/system/uwsgi@.socket
 /usr/lib/tmpfiles.d/uwsgi.conf
 
+%files legacypython
+%defattr(-,root,root,-)
+/usr/lib/python2*/*
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib/uwsgi/python27_plugin.so
 /usr/lib/uwsgi/python36_plugin.so
-
-%files python
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
