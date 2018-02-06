@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.15
-Release  : 32
+Release  : 33
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -89,7 +89,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507487280
+export SOURCE_DATE_EPOCH=1517951402
 python3 setup.py build -b py3
 
 %install
