@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.15
-Release  : 34
+Release  : 35
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.15.tar.gz
 Source1  : uwsgi.tmpfiles
