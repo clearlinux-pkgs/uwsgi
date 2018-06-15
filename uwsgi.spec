@@ -22,7 +22,7 @@ BuildRequires : go
 BuildRequires : greenlet-dev
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : setuptools
 Patch1: async-profile.patch
