@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.16
-Release  : 44
+Release  : 45
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.16.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.16.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -17,12 +17,13 @@ Requires: uwsgi-bin
 Requires: uwsgi-python3
 Requires: uwsgi-config
 Requires: uwsgi-lib
+Requires: uwsgi-license
 Requires: uwsgi-python
 BuildRequires : go
 BuildRequires : greenlet-dev
 BuildRequires : pbr
 BuildRequires : pip
-
+BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
 Patch1: async-profile.patch
@@ -38,6 +39,7 @@ For official documentation check: https://uwsgi-docs.readthedocs.org/en/latest/
 Summary: bin components for the uwsgi package.
 Group: Binaries
 Requires: uwsgi-config
+Requires: uwsgi-license
 
 %description bin
 bin components for the uwsgi package.
@@ -54,9 +56,18 @@ config components for the uwsgi package.
 %package lib
 Summary: lib components for the uwsgi package.
 Group: Libraries
+Requires: uwsgi-license
 
 %description lib
 lib components for the uwsgi package.
+
+
+%package license
+Summary: license components for the uwsgi package.
+Group: Default
+
+%description license
+license components for the uwsgi package.
 
 
 %package python
@@ -89,11 +100,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1518269595
+export SOURCE_DATE_EPOCH=1530382147
 python3 setup.py build -b py3
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/uwsgi
+cp LICENSE %{buildroot}/usr/share/doc/uwsgi/LICENSE
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -105,10 +118,10 @@ mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/uwsgi.conf
 ## make_install_append content
 PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
-PYTHON=python3.6  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python36"
+PYTHON=python3.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python37"
 install -d -m 755 %{buildroot}/usr/lib/uwsgi
 install -p -D -m 644 python27_plugin.so  %{buildroot}/usr/lib/uwsgi/
-install -p -D -m 644 python36_plugin.so  %{buildroot}/usr/lib/uwsgi/
+install -p -D -m 644 python37_plugin.so  %{buildroot}/usr/lib/uwsgi/
 ## make_install_append end
 
 %files
@@ -127,7 +140,11 @@ install -p -D -m 644 python36_plugin.so  %{buildroot}/usr/lib/uwsgi/
 %files lib
 %defattr(-,root,root,-)
 /usr/lib/uwsgi/python27_plugin.so
-/usr/lib/uwsgi/python36_plugin.so
+/usr/lib/uwsgi/python37_plugin.so
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/uwsgi/LICENSE
 
 %files python
 %defattr(-,root,root,-)
