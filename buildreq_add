@@ -2,3 +2,4 @@
 # picked up automatically. One name per line, no whitespace.
 greenlet-dev
 python-dev
+python3-staticdev
