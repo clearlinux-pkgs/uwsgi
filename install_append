@@ -1,7 +1,5 @@
-PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
-PYTHON=python3.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python37"
+PYTHON=python  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python"
 install -d -m 755 %{buildroot}/usr/lib/uwsgi
-install -p -D -m 644 python27_plugin.so  %{buildroot}/usr/lib/uwsgi/
-install -p -D -m 644 python37_plugin.so  %{buildroot}/usr/lib/uwsgi/
+install -p -D -m 644 python_plugin.so  %{buildroot}/usr/lib/uwsgi/
 
 

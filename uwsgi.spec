@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.17
-Release  : 54
+Release  : 55
 URL      : http://projects.unbit.it/downloads/uwsgi-2.0.17.tar.gz
 Source0  : http://projects.unbit.it/downloads/uwsgi-2.0.17.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -23,7 +23,6 @@ Requires: uwsgi-services = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-golang
 BuildRequires : greenlet-dev
-BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : python3-staticdev
 Patch1: async-profile.patch
@@ -109,7 +108,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565460965
+export SOURCE_DATE_EPOCH=1573761054
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -125,7 +124,7 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/uwsgi
-cp LICENSE %{buildroot}/usr/share/package-licenses/uwsgi/LICENSE
+cp %{_builddir}/uwsgi-2.0.17/LICENSE %{buildroot}/usr/share/package-licenses/uwsgi/ba8b424d462ab14f383ebc73adb43067c72e3a7f
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -136,11 +135,9 @@ install -m 0644 %{SOURCE3} %{buildroot}/usr/lib/systemd/system/uwsgi@.socket
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/uwsgi.conf
 ## install_append content
-PYTHON=python2.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python27"
-PYTHON=python3.7  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python37"
+PYTHON=python  %{buildroot}/usr/bin/uwsgi --build-plugin "plugins/python python"
 install -d -m 755 %{buildroot}/usr/lib/uwsgi
-install -p -D -m 644 python27_plugin.so  %{buildroot}/usr/lib/uwsgi/
-install -p -D -m 644 python37_plugin.so  %{buildroot}/usr/lib/uwsgi/
+install -p -D -m 644 python_plugin.so  %{buildroot}/usr/lib/uwsgi/
 ## install_append end
 
 %files
@@ -156,12 +153,11 @@ install -p -D -m 644 python37_plugin.so  %{buildroot}/usr/lib/uwsgi/
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/uwsgi/python27_plugin.so
-/usr/lib/uwsgi/python37_plugin.so
+/usr/lib/uwsgi/python_plugin.so
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/uwsgi/LICENSE
+/usr/share/package-licenses/uwsgi/ba8b424d462ab14f383ebc73adb43067c72e3a7f
 
 %files python
 %defattr(-,root,root,-)
