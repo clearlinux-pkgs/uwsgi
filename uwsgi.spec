@@ -4,13 +4,13 @@
 #
 Name     : uwsgi
 Version  : 2.0.18
-Release  : 60
+Release  : 61
 URL      : https://projects.unbit.it/downloads/uwsgi-2.0.18.tar.gz
 Source0  : https://projects.unbit.it/downloads/uwsgi-2.0.18.tar.gz
 Source1  : uwsgi.tmpfiles
 Source2  : uwsgi@.service
 Source3  : uwsgi@.socket
-Summary  : A fast, self-healing and developer/sysadmin-friendly application container server coded in pure C
+Summary  : The uWSGI server
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: uwsgi-bin = %{version}-%{release}
@@ -31,9 +31,8 @@ Patch3: 0001-plugins-corerouter-cr_map.c-fix-this-if-clause-does-.patch
 Patch4: build-plugins-flags.patch
 
 %description
-This is a bit convoluted, but you run it (so far) this way:
-You have to compile PyPy with strange options. I'll explain them below.
-In the pypy checkout, run:
+The uWSGI project
+For official documentation check: https://uwsgi-docs.readthedocs.org/en/latest/
 
 %package bin
 Summary: bin components for the uwsgi package.
@@ -84,7 +83,6 @@ python components for the uwsgi package.
 Summary: python3 components for the uwsgi package.
 Group: Default
 Requires: python3-core
-Provides: pypi(uWSGI)
 
 %description python3
 python3 components for the uwsgi package.
@@ -111,8 +109,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582905799
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583524456
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
