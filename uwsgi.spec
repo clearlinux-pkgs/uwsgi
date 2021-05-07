@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.19.1
-Release  : 70
+Release  : 71
 URL      : https://github.com/unbit/uwsgi/archive/2.0.19.1/uwsgi-2.0.19.1.tar.gz
 Source0  : https://github.com/unbit/uwsgi/archive/2.0.19.1/uwsgi-2.0.19.1.tar.gz
 Source1  : uwsgi.tmpfiles
