@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.20
-Release  : 77
+Release  : 78
 URL      : https://github.com/unbit/uwsgi/archive/2.0.20/uwsgi-2.0.20.tar.gz
 Source0  : https://github.com/unbit/uwsgi/archive/2.0.20/uwsgi-2.0.20.tar.gz
 Source1  : uwsgi.tmpfiles
