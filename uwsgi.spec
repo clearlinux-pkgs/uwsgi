@@ -4,7 +4,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.20
-Release  : 79
+Release  : 80
 URL      : https://github.com/unbit/uwsgi/archive/2.0.20/uwsgi-2.0.20.tar.gz
 Source0  : https://github.com/unbit/uwsgi/archive/2.0.20/uwsgi-2.0.20.tar.gz
 Source1  : uwsgi.tmpfiles
@@ -21,7 +21,6 @@ Requires: uwsgi-python = %{version}-%{release}
 Requires: uwsgi-python3 = %{version}-%{release}
 Requires: uwsgi-services = %{version}-%{release}
 BuildRequires : buildreq-distutils3
-BuildRequires : buildreq-golang
 BuildRequires : pypi-greenlet-dev
 Patch1: async-profile.patch
 Patch2: build-plugins-flags.patch
@@ -104,7 +103,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641446083
+export SOURCE_DATE_EPOCH=1647891951
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
