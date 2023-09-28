@@ -4,10 +4,10 @@
 # Using build pattern: distutils3
 #
 Name     : uwsgi
-Version  : 2.0.21
-Release  : 85
-URL      : https://github.com/unbit/uwsgi/archive/2.0.21/uwsgi-2.0.21.tar.gz
-Source0  : https://github.com/unbit/uwsgi/archive/2.0.21/uwsgi-2.0.21.tar.gz
+Version  : 2.0.22
+Release  : 86
+URL      : https://github.com/unbit/uwsgi/archive/2.0.22/uwsgi-2.0.22.tar.gz
+Source0  : https://github.com/unbit/uwsgi/archive/2.0.22/uwsgi-2.0.22.tar.gz
 Source1  : uwsgi.tmpfiles
 Source2  : uwsgi@.service
 Source3  : uwsgi@.socket
@@ -100,12 +100,12 @@ services components for the uwsgi package.
 
 
 %prep
-%setup -q -n uwsgi-2.0.21
-cd %{_builddir}/uwsgi-2.0.21
+%setup -q -n uwsgi-2.0.22
+cd %{_builddir}/uwsgi-2.0.22
 %patch -P 1 -p1
 %patch -P 2 -p1
 pushd ..
-cp -a uwsgi-2.0.21 buildavx2
+cp -a uwsgi-2.0.22 buildavx2
 popd
 
 %build
@@ -113,7 +113,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1695930951
+export SOURCE_DATE_EPOCH=1695938405
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
