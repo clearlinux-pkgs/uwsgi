@@ -7,7 +7,7 @@
 #
 Name     : uwsgi
 Version  : 2.0.26
-Release  : 89
+Release  : 90
 URL      : https://github.com/unbit/uwsgi/archive/2.0.26/uwsgi-2.0.26.tar.gz
 Source0  : https://github.com/unbit/uwsgi/archive/2.0.26/uwsgi-2.0.26.tar.gz
 Source1  : uwsgi.tmpfiles
